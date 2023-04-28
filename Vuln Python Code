@@ -1,0 +1,135 @@
+#!/usr/bin/env/bin/python3 
+import nmap3
+from time import sleep as pause
+import re
+import vulners
+import numpy as np
+import os
+from os.path import exists
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import (Mail,Attachment, FileContent, FileName, FileType, Disposition)
+import datetime
+import base64
+
+ip_addresses=[]
+service_versions=[]
+confirmed_cves=[]
+
+date = str(datetime.datetime.now().date())
+time = str(datetime.datetime.now().time().replace(microsecond=0))
+
+
+def readIp(filename,action):
+    f=open(filename,action)
+    for line in f:
+        ip_addresses.append(line.strip())
+    return filename,action
+
+def readData(filename,action):
+    f=open(filename,action)
+    file_lines=f.readlines()
+    return filename,action
+
+
+def writeData(savefile,action,data):
+    f=open(savefile,action)
+    f.write(data)
+    f.close()
+    
+def scanPorts(target,nmap,arg,result):
+    ips,action=readIp("vulnscan_ip.txt", "r")
+    for host in range (len(ip_addresses)):
+        target=ip_addresses[host]
+        nmap=nmap3.Nmap()
+        result=str(nmap.nmap_version_detection(target,args="-sS"))
+    return target,nmap,arg,result
+
+def regex(expression,string):
+    expression=re.findall(expression, string)
+    return expression,string
+
+def regexOutput(target,nmap,arg,result,ports,string,services):
+    target,nmap,arg,result = scanPorts(target,nmap,arg,result)
+    ports,string = regex("\d+(?=\W+state\W+)|open(?=\W)", result)
+    services,string = regex("(?<='name': ')[^']+(?=')", result)
+    version,string = regex("(?<='product': ')[^']*|(?<='version': ')[^']*",result)
+    old_ports=exists("open_ports.txt")
+    if not old_ports:
+        for each in ports:
+            if each !="open":
+                writeData("open_ports.txt","a", each)
+                writeData("open_ports.txt","a", "\n") 
+    else:        
+        for each in ports:
+            if each !="open":
+                writeData("new_ports.txt", "a", each)
+                writeData("new_ports.txt","a", "\n") 
+    for all_services in services:
+        writeData("open_services","a", all_services)
+        writeData("open_services","a", "\n")
+    for all_versions in version:
+            service_versions.append(all_versions)
+            writeData("versions.txt","a",all_versions)
+            writeData("versions.txt","a", "\n")
+   
+
+def versionVulnerbilities(exploits):
+    vulners_api=vulners.VulnersApi(api_key="NBYDHCTECZI1I76ZJPCM5CENAHTNR63FE2ZVLZ7HUBQR1014LDLMGLRSXOZYZNY6")
+    for each_version in range(len(service_versions)):
+        cve = service_versions[each_version]
+        exploits= str(vulners_api.find_exploit_all(cve))
+        cve_reference, string = regex("CVE-\d+-\d+",exploits)
+        for all_cves in cve_reference:
+            confirmed_cves.append(cve_reference)
+            return cve_reference
+
+def removeDuplicates():
+    unique_array=np.array(confirmed_cves)
+    final_cves=np.unique(unique_array)
+    for element in final_cves:
+        writeData("cves.txt","a",element)
+        writeData("cves.txt","a", "\n")
+
+
+def sendEmail(sender,receiver):
+    message = Mail(
+    from_email=sender,
+    to_emails=receiver,
+    subject="New open ports found",
+    html_content="<strong> New ports were found to be open from a scan result completed at " + date + "\t"+ time + ".\t"
+    "Please check attachment for further information.</strong>")
+    with open("open_ports.txt", 'rb') as f:
+        data = f.read()
+        encoded_file = base64.b64encode(data).decode()
+    attachment = Attachment(
+        FileContent(encoded_file),
+        FileName('attachment.txt'),
+        FileType('text/plain'),
+        Disposition('attachment'))
+    message.attachment = attachment
+    sg = SendGridAPIClient("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")
+    response = sg.send(message)
+    print(response.status_code)
+    print(response.body) 
+    print(response.headers)
+    
+
+        
+regexOutput(str,str,
+str,str,str,str,str)
+
+versionVulnerbilities("")
+
+removeDuplicates()
+
+readData("cves.txt","r")
+
+new_ports=exists("new_ports.txt")
+
+if new_ports:
+    sendEmail("ChesterProjectTeam@mail.com","chesterprojectteam@gmail.com")
+
+
+
+
+

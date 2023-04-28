@@ -1,0 +1,5 @@
+python-dotenv
+python3-nmap
+sendgrid
+vulners
+numpy

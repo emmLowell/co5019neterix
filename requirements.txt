@@ -1,0 +1,8 @@
+sqlalchemy
+aiosqlite
+aiomysql
+python-dotenv
+python3-nmap
+sendgrid
+vulners
+numpy

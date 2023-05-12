@@ -1,37 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Vulnerability Scanner</title>
-	<link rel="stylesheet" href="styles.css">
-	<style>
-		body {
-			background-image: url('background.jpg');
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scsle=1.0">
+    <title>Welcome to our group project</title>
+    <link rel="stylesheet" type="text/css" href="Project.css">
+    <script src="https://kit.fontawesome.com/12c843ceec.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
-<body>
-	<header>
-		<div class="container">
-			<img src="logo.png" class="logo">
-		</div>
-	</header>
-	<nav>
-		<ul>
-			<li><a href="#home">Home</a></li>
-			<li><a href="#scan">Scan</a></li>
-			<li><a href="#report">Report</a></li>
-			<li><a href="#Contact">Contact</a></li>
-			<li><a href="#logout">Logout</a></li>
-		</ul>
-	</nav>   
-	<select class="port-type">
-		<option value="select">Select Port Type:</option>
-		<option value="tcp">TCP</option>
-		<option value="udp">UDP</option>
-	</select>
-	<button class="scan-button">SCAN</button>
-</body>
-</html> 
 
+<body>
+    <header class="background">
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <img src="logo.png" class="logo">
+            <nav class="navigate">
+                <ul>
+                    <li><a class="active" href="#">HOME</a></li>
+                    <li><a href="#">IP SCAN</a></li>
+                    <li><a href="#">REPORTS</a></li>
+                    <button class="log-in"><a href="#">LOGIN</a></button>
+                </ul>
+            </nav>
+        </nav>
+    </header>
+
+
+    <div class="notes">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+                    <input type="email" required placeholder="Email Address">
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                    <input type="password" required placeholder="Password">
+                </div>
+                <div class="forgot-pwrd">
+                    <a href="#">Forgotten Password</a>
+                </div>
+                <button type="submit" class="btn">Sign In</button>
+                <div class="new-acnt">
+                    <p>New to VulnerScan? <a href="#" class="signup-link">Sign up here</a></p>
+                </div>
+            </form>
+        </div> 
+    </div>
+</body>
+
+</html>

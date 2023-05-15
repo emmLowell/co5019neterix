@@ -173,3 +173,8 @@ cython_debug/
 *.vsix
 
 *.sqlite
+
+
+*.db
+*.sqlite
+*.sqlite3

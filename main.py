@@ -2,6 +2,9 @@ import asyncio
 
 from database import DatabaseManager
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Main:
     database: DatabaseManager

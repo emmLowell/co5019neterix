@@ -12,11 +12,9 @@ load_dotenv()
 class Main:
     development = getenv("PRODUCTION", "false").lower() == "false"
     database: DatabaseManager
-    nmapScanner: NmapScanner
 
     async def start(self):
         self.database = DatabaseManager()
-        self.nmapScanner = NmapScanner()
         await self.database.check_db()
         
         if(self.development):
@@ -28,7 +26,7 @@ class Main:
         #TODO - Implement production code
 
     async def run_development(self, test_ip: str = "127.0.0.1"):
-        data = self.nmapScanner.scan(test_ip)
+        data = NmapScanner.scan(test_ip)
         print("\n".join(data.all_service_products()))
 
 

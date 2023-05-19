@@ -181,7 +181,7 @@ class NmapScanResult:
 
 class NmapScanner:
     @staticmethod
-    def scan(self, target, options="-sS") -> NmapScanResult:
+    def scan(target, options="-sS") -> NmapScanResult:
         """
         Scan a target with Nmap.
 

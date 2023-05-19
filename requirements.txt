@@ -5,4 +5,5 @@ python-dotenv
 python3-nmap
 sendgrid
 vulners
+django
 numpy

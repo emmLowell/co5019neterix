@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Neterix | {{title}}</title>
+</head>
+<body>
+    {% block header %}
+    <p style="font-family:verdana; font-size:xx-large; color:white; position: fixed; top: 120px; left: 175px;">
+        Neterix | {{title}}
+    </p>
+    <img src="{% static 'images/logo.png' %}" class="logo"/>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'scan' %}">Scan</a></li>
+            <li><a href="{% url 'report' %}">Report</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>  
+    {% endblock %}
+    {% block main %}
+    {% endblock %}
+    {% block footer %}
+    {% endblock %}
+</body>
+</html>

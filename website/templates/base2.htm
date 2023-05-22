@@ -6,33 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/real.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
     <script src="https://kit.fontawesome.com/12c843ceec.js" crossorigin="anonymous"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     {% block css %}
-    
     {% endblock %}
 </head>
 <body>
     <header>
         {% block header %}
         <nav class="navbar navbar-dark navbar-expand-lg fixed-top navbar-custom" style="background-color: white;">
-          <div class="container"><a class="navbar-brand" href="#">
-            <img src="{% static 'css/logo.png' %}" class="img-fluid">></a><button data-bs-toggle="collapse"
-              class="navbar-toggler" data-bs-target="#navbarResponsive"><span class="visually-hidden">Toggle
-                navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" style="color: blue;">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'scan' %}" style="color: blue;">IP Scan</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'reports' %}" style="color: blue;">Reports</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}" style="color: blue;">Contact</a></li>
-                <button class="log-in"><a href="{% url 'login' %}">Log In</a></button>
-              </ul>
+            <div class="container"><a class="navbar-brand" href="#">
+              <img src="{% static 'css/logo.png' %}" class="img-fluid">></a><button data-bs-toggle="collapse"
+                class="navbar-toggler" data-bs-target="#navbarResponsive"><span class="visually-hidden">Toggle
+                  navigation</span><span class="navbar-toggler-icon"></span></button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" style="color: blue;">Home</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'scan' %}" style="color: blue;">IP Scan</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'reports' %}" style="color: blue;">Reports</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}" style="color: blue;">Contact</a></li>
+                  <button class="log-in"><a href="{% url 'login' %}">Log Out</a></button>
+                </ul>
+              </div>
             </div>
-          </div>
-        </nav>
+          </nav>
         {% endblock %}
     </header>
     <main>

@@ -3,7 +3,7 @@ from .models import Ip
 
 
 def home(request):
-    return render(request, 'main/home.html', {'title': 'Home'})
+    return render(request, 'main/home-page.html', {'title': 'Home'})
 
 
 def scan(request):
@@ -18,3 +18,23 @@ def contact(request):
 def report(request):
     all_ips = Ip.objects.all
     return render(request, 'main/report.html', {'all': all_ips, 'title': 'Report'})
+
+
+def login(request):
+    return render(request, 'main/login.html', {'title': 'Login'})
+
+
+def signup(request):
+    return render(request, 'main/signup.html', {'title': 'Signup'})
+
+
+def recover2(request):
+    return render(request, 'main/forgotton-password.html', {'title': 'Recover2'})
+
+
+def recover3(request):
+    return render(request, 'main/forgotton-password-number.html', {'title': 'Recover3'})
+
+
+def recover(request):
+    return render(request, 'main/create-new-password.html', {'title': 'Recover'})

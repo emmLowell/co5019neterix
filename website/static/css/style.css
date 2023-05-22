@@ -1,0 +1,124 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-image: url(background.jpg);
+    background-size: 100%;
+}
+
+.navbar-brand{
+    height: 10px;
+}
+
+.navbar-brand img{
+    margin-top: -50px;
+    height: 100px;
+    width: auto;
+    display: inline-block;
+    position: absolute;
+}
+
+.log-in{
+    background-color: red;
+    cursor: pointer;
+    width: 60px;
+    border-radius: 8px;
+    font-size: 17px;
+    border: none;
+}
+
+.log-in a{
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.log-in:hover{
+    border: 2px solid rgb(0, 0, 0);
+}
+
+.log-in a:hover{
+    background: none;
+}
+
+.home {
+    margin: auto;
+    text-align: center;
+    margin-top: 140px;
+  }
+
+  .home h5{
+    font-size: 46px;
+    color: white;
+  }
+
+  .home p {
+    font-size: 20px;
+    margin: 30px 0;
+    box-sizing: 60px;
+    color: white;
+  }
+
+  .description {
+    position: relative;
+    margin: 20px 0 40px;
+    left: 10px;
+  }
+
+  .description .info li{
+    display: inline-block;
+    margin: 0 56px;
+    width: 205px;
+    text-align: left;
+    
+  }
+
+  .description .info li p1{
+    color: white;
+  }
+
+  .description .info li p3{
+    color: white;
+    margin-top: 100px;
+  }
+
+
+  .info p1 {
+    margin-bottom: 10px;
+  }
+
+  .description .info li p2{
+    color: white;
+  }
+
+  .main {
+    margin-top: 120px;
+  }
+
+  .main ul li {
+    display: inline-block;
+    margin: 0 50px;
+  }
+  
+  .main .btn {
+    background-color: #4c9baf;
+    width: 210px;
+    height: 50px;
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    transition: 1.3s ease-in-out
+  }
+
+  .main .btn:hover{
+    background-color: #4c9baf;
+    transform: scale(1.25) perspective(1px);
+  }
+
+  

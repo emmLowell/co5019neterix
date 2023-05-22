@@ -69,3 +69,4 @@ EXPOSE 8080
 # Print installation complete message
 RUN echo -e "install complete"
 
+ENTRYPOINT ["pip", "install", "-r", "requirements.txt"]

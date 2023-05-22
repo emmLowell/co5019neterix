@@ -72,5 +72,6 @@ EXPOSE 8080
 # Print installation complete message
 RUN echo -e "install complete"
 
-# 
+# Run django server on start
+RUN python3 main.py
 

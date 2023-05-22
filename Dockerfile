@@ -1,12 +1,15 @@
 # Use an official Ubuntu base image
-FROM python:3.8-slim
+FROM ubuntu:latest
 
 # Update the package manager and install required dependencies
 RUN apt-get update
-RUN apt-get install -y git curl jq file unzip make gcc g++ python3 python-dev libtool nmap
+RUN apt-get install -y git curl jq file unzip make gcc g++ python3 python-dev-is-python3 libtool nmap pip redis nginx gunicorn
 
 # Create the server directory
 RUN mkdir -p /mnt/server
+
+# Add nginx conf file
+COPY nginx.conf /etc/nginx/conf.d/
 
 # Set the working directory
 WORKDIR /mnt/server
@@ -63,6 +66,11 @@ RUN echo "Installing python requirements into folder" && \
         pip install -U --prefix .local -r ${REQUIREMENTS_FILE}; \
     fi
 
+# Expose port 80 for HTTP traffic
+EXPOSE 8080
+
 # Print installation complete message
-RUN echo -e "install complete" && \
-    exit 0
+RUN echo -e "install complete"
+
+# 
+

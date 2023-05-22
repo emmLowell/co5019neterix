@@ -8,9 +8,6 @@ RUN apt-get install -y git curl jq file unzip make gcc g++ python3 python-dev-is
 # Create the server directory
 RUN mkdir -p /mnt/server
 
-# Add nginx conf file
-COPY nginx.conf /etc/nginx/conf.d/
-
 # Set the working directory
 WORKDIR /mnt/server
 
@@ -71,7 +68,4 @@ EXPOSE 8080
 
 # Print installation complete message
 RUN echo -e "install complete"
-
-# Run django server on start
-RUN python3 main.py
 

@@ -4,6 +4,11 @@ This is a Python script that utilizes Nmap and Vulcan to ping one or multiple se
 
 ---
 
+## TODO List
+
+- [ ] add result page
+- [ ] generate report to file
+
 ## Installation
 To use this script, you must first install the required libraries. You can do this using pip:
 

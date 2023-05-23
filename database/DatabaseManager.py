@@ -1,5 +1,10 @@
 from os import getenv
-from typing import Any, AsyncGenerator, List
+from typing import Any, AsyncGenerator, List, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from website.Scanner.models import Schedule
+
+
 
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import (
@@ -43,12 +48,11 @@ class DatabaseManager:
         )
         django.setup()
 
-    def get_schedules(self) -> List[Any]:
+    def get_schedules(self) -> List['Schedule']:
         from website.Scanner.models import Schedule
+        return Schedule.objects.all()
 
-        all = Schedule.objects.all()
-        print(all)
-        return all
+        
 
     def create_engine(self) -> AsyncEngine:
         if "aiomysql" in DatabaseManager.DB_URL:

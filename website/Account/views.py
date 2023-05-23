@@ -1,9 +1,5 @@
 from django.shortcuts import render
 
-def login(request):
-    return render(request, 'account/login.html', {'title': 'Login'})
-
-
 def signup(request):
     return render(request, 'account/signup.html', {'title': 'Signup'})
 

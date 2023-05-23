@@ -1,5 +1,5 @@
 {% extends 'base.htm' %}
-{% load bootstrap5 %}
+{% load django_bootstrap5 %}
 {% load static %}
 
 
@@ -7,14 +7,135 @@
 <div class="container text-white mt-5">
     <h1 class="display-1">Create/Scanning IPs</h1>
     <p>Choose to create a new IP address or scan an IP address</p>
-    <div class="container d-flex p-2 text-white mt-5">
-        <div class="p-2">
-            <h1>Create a new IP</h1>
-            <form method="post">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                {% bootstrap_button button_type="submit" content="Scan" %}
-            </form>
+    <div class="d-flex">
+        <div class="container d-flex p-2 text-white mt-5">
+            <div class="p-2">
+                <h1>Scan IP now</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form scan_ip_now %}
+                    {% bootstrap_button button_type="submit" content="Scan" %}
+                </form>
+            </div>
+        </div>
+        <div class="container d-flex p-2 text-white mt-5">
+            <div class="p-2">
+                <h1>Schedule IP Scan</h1>
+                <form action="/schedule/" method="post">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crontabModal">
+                        Cron Cheat Sheet
+                    </button>
+
+                    <div class="row g-3">
+                        <div class="col">
+                            {% bootstrap_field schedule_ip_form.minute %}
+                        </div>
+                        <div class="col">
+                            {% bootstrap_field schedule_ip_form.hour %}
+                        </div>
+                        <div class="col">
+                            {% bootstrap_field schedule_ip_form.day_of_month %}
+                        </div>
+                        <div class="col">
+                            {% bootstrap_field schedule_ip_form.month %}
+                        </div>
+                        <div class="col">
+                            {% bootstrap_field schedule_ip_form.day_of_week %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {% bootstrap_field schedule_ip_form.scan_type %}
+                    </div>
+                    <div class="mb-3">
+                        {% bootstrap_field schedule_ip_form.ports %}
+                    </div>
+                    <div class="mb-3">
+                        {% bootstrap_field schedule_ip_form.ips %}
+                    </div>
+
+                    {% bootstrap_button button_type="submit" content="Schedule" %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="crontabModal" tabindex="-1" aria-labelledby="crontabModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crontabModalLabel">Crontab Cheat Sheet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Allowed Values</th>
+                            <th>Special Characters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Minute</td>
+                            <td>0-59</td>
+                            <td>* , -</td>
+                        </tr>
+                        <tr>
+                            <td>Hour</td>
+                            <td>0-23</td>
+                            <td>* , -</td>
+                        </tr>
+                        <tr>
+                            <td>Day of Month</td>
+                            <td>1-31</td>
+                            <td>* , - ? /</td>
+                        </tr>
+                        <tr>
+                            <td>Month</td>
+                            <td>1-12</td>
+                            <td>* , -</td>
+                        </tr>
+                        <tr>
+                            <td>Day of Week</td>
+                            <td>0-7 or SUN-SAT</td>
+                            <td>* , - ? /</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4>Examples:</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Crontab Expression</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>*/5 * * * *</td>
+                            <td>Every 5 minutes</td>
+                        </tr>
+                        <tr>
+                            <td>0 */1 * * *</td>
+                            <td>Every hour</td>
+                        </tr>
+                        <tr>
+                            <td>0 8-12 * * *</td>
+                            <td>Hour range (8 AM to 12 PM)</td>
+                        </tr>
+                        <tr>
+                            <td>0 0 * * *</td>
+                            <td>Once a day (midnight)</td>
+                        </tr>
+                        <tr>
+                            <td>0 0 * * MON</td>
+                            <td>Every Monday</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

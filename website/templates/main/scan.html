@@ -1,21 +1,35 @@
-{% extends 'base4.htm' %}
+{% extends 'base5.htm' %}
 {% load static %}
 
 {% block main %}
-<select class="port-type">
-    <option value="select">Select Port Type:</option>
-    <option value="tcp">TCP</option>
-    <option value="udp">UDP</option>
-</select>
-<select class="scan-ports">
-    <option value="select">Select Ports:</option>
-    <option value="all_ports">All Ports</option>
-    <option value="top_thousand">Common Ports</option>
-    <button class="scan-button" ONCLICK="alert('Your scan has been initiated')">Scan</button>
-</select>
-<select class="ip-selection" multiple>
-    {% for item in all%}
-    <option value="{{item.ip_address}}">{{item.ip_address}}</option>
-    {%endfor%}
-</select>
+<div class="database">
+    <h6>Create/Scanning IPs</h6>
+    <p6>Choose to create a new IP address or scan an IP address</p6>
+    <div class="create">
+        <h1>Create a new IP</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <button type="submit">Create</button>
+        </form>
+    </div>
+    <div class="scan">
+        <select class="port-type">
+            <option value="select">Select Port Type:</option>
+            <option value="tcp">TCP</option>
+            <option value="udp">UDP</option>
+        </select>
+        <select class="scan-ports">
+            <option value="select">Select Ports:</option>
+            <option value="all_ports">All Ports</option>
+            <option value="top_thousand">Common Ports</option>
+            <button class="scan-button" ONCLICK="alert('Your scan has been initiated')">Scan</button>
+        </select>
+        <select class="ip-selection" multiple>
+            {% for item in all%}
+            <option value="{{item.ip_address}}">{{item.ip_address}}</option>
+            {%endfor%}
+        </select>
+    </div>
+</div>
 {% endblock %}

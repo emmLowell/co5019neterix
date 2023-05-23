@@ -13,15 +13,16 @@ body {
     align-items: center;
 } 
 
-.navbar-brand{
-    height: 10px;
-}
-
 .navbar-brand img{
     margin-top: -50px;
-    height: 100px;
+    height: 10px;
     width: auto;
     display: inline-block;
+}
+
+.collapse navbar-collapse .navbar-nav ms-auto .nav-item {
+    display: inline-block;
+    flex: auto;
 }
 
 .log-in{

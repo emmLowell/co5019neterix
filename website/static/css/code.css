@@ -1,0 +1,77 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+  }
+  
+  body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-image: url(background.jpg);
+    background-size: 100%;
+  }
+  
+  .navbar-brand{
+    height: 10px;
+  }
+  
+  .navbar-brand img{
+    margin-top: -50px;
+    height: 100px;
+    width: auto;
+    display: inline-block;
+    position: absolute;
+  }
+  
+  .log-in{
+    background-color: red;
+    cursor: pointer;
+    width: 60px;
+    border-radius: 8px;
+    font-size: 17px;
+    border: none;
+  }
+  
+  .log-in a{
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .log-in:hover{
+    border: 2px solid rgb(0, 0, 0);
+  }
+  
+  .log-in a:hover{
+    background: none;
+  }
+
+.database{
+    margin-top: 120px;
+    color: white;
+    text-align: center;
+    align-items: center;
+    padding:10px;
+}
+
+.database h6{
+font-size: 44px;
+margin-bottom: 10px;
+}
+
+.database p6{
+ font-size: 18px;
+}
+
+.database .create{
+float: left;
+margin-left: ;
+}
+
+.database .scan {
+float: right;
+}
+
+
+

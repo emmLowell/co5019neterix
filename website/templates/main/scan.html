@@ -1,6 +1,12 @@
 {% extends 'base.htm' %}
 {% load static %}
 
+
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/scan.css' %}">
+{% endblock %}
+
+
 {% block main %}
 <select class="port-type">
     <option value="select">Select Port Type:</option>

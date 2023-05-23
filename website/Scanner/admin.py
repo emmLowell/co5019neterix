@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Cve, Scan, Ip, Port, IpCve, IpPort
+from .models import Cve, Scan, Ip, Port, IpCve, IpPort, Schedule
 
 
-admin.site.register([Cve, Scan, Ip, Port, IpCve, IpPort])
+admin.site.register([Cve, Scan, Ip, Port, IpCve, IpPort, Schedule])
 
 
-admin.site.site_header = 'Vulnerability Scanner'
-admin.site.site_title = 'Neterix'
+admin.site.site_header = "Vulnerability Scanner"
+admin.site.site_title = "Neterix"

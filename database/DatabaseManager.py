@@ -2,13 +2,16 @@ from os import getenv
 from typing import Any, AsyncGenerator, List
 
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import (AsyncEngine, AsyncSession,
-                                    async_sessionmaker, create_async_engine)
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
 from config import ConfigManager, GeneralConfig
 
-from .SQLQueries import (CREATE_TABLES, SQL_TABLE_EXISTS, SQLITE_TABLE_EXISTS,
-                         Tables)
+from .SQLQueries import CREATE_TABLES, SQL_TABLE_EXISTS, SQLITE_TABLE_EXISTS, Tables
 from django.conf import settings
 import django
 import asyncio
@@ -30,18 +33,22 @@ class DatabaseManager:
     def __init__(self, config: ConfigManager):
         self.config = config
         general_config = self.config.read_config(GeneralConfig)
-        if (general_config.production):
+        if general_config.production:
             from website.Neterix import settings as websettings
         else:
             from website.Neterix import settings_dev as websettings
-        settings.configure(DATABASES=websettings.DATABASES, INSTALLED_APPS=["website.Scanner.apps.ScannerConfig"])
+        settings.configure(
+            DATABASES=websettings.DATABASES,
+            INSTALLED_APPS=["website.Scanner.apps.ScannerConfig"],
+        )
         django.setup()
 
-    async def get_schedules(self) -> List[Any]:
+    def get_schedules(self) -> List[Any]:
         from website.Scanner.models import Schedule
-        schedules = await asyncio.to_thread(Schedule.objects.all)
-        print(schedules)
-        return []  # TODO - return [{ip: "127.0.0.1", cron_time: "0 0 * * *"}]
+
+        all = Schedule.objects.all()
+        print(all)
+        return all
 
     def create_engine(self) -> AsyncEngine:
         if "aiomysql" in DatabaseManager.DB_URL:

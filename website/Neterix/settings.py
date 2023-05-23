@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website.Scanner.apps.ScannerConfig',
+    "django_bootstrap5",
 ]
 
 MIDDLEWARE = [

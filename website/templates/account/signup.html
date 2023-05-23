@@ -1,0 +1,35 @@
+{% extends 'base.htm' %}
+{% load static %}
+
+{% block main %}
+<div class="notes">
+    <div class="box">
+       <h3>Sign In</h3>
+       <form action="#">
+        <div class="initial-box">
+          <ul>
+            <li><input type="firstname" required placeholder="First Name"></li>
+            <li><input type="surname" required placeholder="Surname"></li>
+          </ul>
+        </div>
+        <div class="input-box1">
+          <span class="iconz"><ion-icon name="person-outline"></ion-icon></span>
+          <input class="username" required placeholder="Username">
+      </div>
+        <div class="input-box1">
+            <span class="iconz"><ion-icon name="mail-outline"></ion-icon></span>
+            <input class="email" required placeholder="Email Address">
+        </div>
+        <div class="input-box1">
+            <span class="iconz"><ion-icon name="lock-closed-outline"></ion-icon></span>
+            <input class="password" required placeholder="Password">
+        </div>
+        <div class="input-box1">
+            <span class="iconz"><ion-icon name="lock-closed-outline"></ion-icon></span>
+            <input class="confirm-password" required placeholder="Confirm Password">
+        </div>
+        <button type="submit" class="btn"><a href="{% url 'login' %}">Create Account</a></button>
+       </form>
+    </div>
+</div>
+{% endblock %}

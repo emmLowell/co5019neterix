@@ -20,7 +20,7 @@ class Main:
 
     async def start(self):
         self.configManager = ConfigManager()
-        self.database = DatabaseManager(self.configManager)
+        #self.database = DatabaseManager(self.configManager)
 
         if not self.general_config.production:
             await self.run_development()
@@ -32,13 +32,11 @@ class Main:
         await asyncio.to_thread(polling.start_polling)
 
         await asyncio.sleep(60 * 60 * 24)
-        # TODO: forever sleep
+        # TODO: forever sleep - ignore for now
 
 
 
     async def run_development(self, test_ip: str = "127.0.0.1"):
-        polling = PollingManager(database=self.database, config=self.configManager)
-        await asyncio.to_thread(polling.start_polling)
         data = NmapScanner.scan(target=test_ip)
         print("\n".join(data.all_service_products()))
 

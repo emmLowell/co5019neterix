@@ -9,5 +9,4 @@ vulners
 django
 numpy
 django_bootstrap5
-django_bootstrap_v5
 APScheduler

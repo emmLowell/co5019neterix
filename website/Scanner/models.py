@@ -28,6 +28,7 @@ class Scan(models.Model):
     
     def link(self):
         return f'/reports/{self.ip_id}/{self.scan_id}'
+    
 
     def __str__(self):
         return f"Scan ID: {self.scan_id}"
@@ -41,6 +42,9 @@ class Ip(models.Model):
     
     def link(self):
         return f'/reports/{self.ip_id}'
+
+    def schedule_link(self):
+        return f'/schedule/{self.ip_id}'
 
     def __str__(self):
         return self.ip_address
@@ -65,6 +69,7 @@ class Port(models.Model):
 
 
 class Schedule(models.Model):
+    id = models.AutoField(primary_key=True)
     ip = models.ForeignKey("Ip", on_delete=models.CASCADE)
     cron_time = models.CharField(max_length=50)
     scan_type = models.CharField(max_length=30)
@@ -73,3 +78,6 @@ class Schedule(models.Model):
         return "Schedule<ip: {}, cron_time: {}, scan_type: {}>".format(
             self.ip, self.cron_time, self.scan_type
         )
+        
+    def delete_link(self):
+        return f'/schedule/remove/{self.id}'

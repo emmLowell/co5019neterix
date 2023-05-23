@@ -7,6 +7,7 @@ from .NmapScanner import (
     StateResult,
 )
 from .VulnersScanner import VulnersScanner, Vulnerability
+from .PollingManager import PollingManager
 
 
 __all__ = (
@@ -18,4 +19,5 @@ __all__ = (
     "StateResult",
     "VulnersScanner",
     "Vulnerability",
+    "PollingManager"
 )

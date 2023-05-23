@@ -1,6 +1,7 @@
 sqlalchemy
 aiosqlite
 aiomysql
+redis
 python-dotenv
 python3-nmap
 sendgrid
@@ -8,3 +9,5 @@ vulners
 django
 numpy
 django_bootstrap5
+django_bootstrap_v5
+APScheduler

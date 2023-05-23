@@ -1,12 +1,27 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, render
+from .forms import ScheduleForm
 from .forms import ScanForm
 from .models import Ip, Scan
 
 
 def home(request):
-    return render(request, 'main/home.html', {'title': 'Home'})
+    return render(request, "main/home.html", {"title": "Home"})
+
+
+def schedule(request):
+    if request.method == "POST":
+        form = ScheduleForm(request.POST)
+        if form.is_valid():
+            schedule = form.save()
+            # Do something with the valid schedule object
+            messages.add_message(request, messages.SUCCESS, "Schedule created successfully")
+            return redirect("home")  # Redirect to a success page or another view
+    else:
+        form = ScheduleForm()
+
+    return render(request, "create_schedule.html", {"form": form})
 
 
 @login_required

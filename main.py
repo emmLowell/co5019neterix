@@ -1,43 +1,44 @@
 import asyncio
-from os import getenv
-
-from database import DatabaseManager
-from website import run_server
-from argparse import ArgumentParser, REMAINDER
-from scan import NmapScanner
+from argparse import REMAINDER, ArgumentParser
 
 from dotenv import load_dotenv
 
+from config import ConfigManager, GeneralConfig
+from database import DatabaseManager
+from scan import NmapScanner, PollingManager
+from website import run_server
 load_dotenv()
 
 
 class Main:
-    development = getenv("PRODUCTION", "false").lower() == "false"
     database: DatabaseManager
+    configManager: ConfigManager
+
+    @property
+    def general_config(self) -> GeneralConfig:
+        return self.configManager.read_config(GeneralConfig)
 
     async def start(self):
-        self.database = DatabaseManager()
+        self.configManager = ConfigManager()
+        self.database = DatabaseManager(self.configManager)
 
-        if self.development:
+        if not self.general_config.production:
             await self.run_development()
         else:
             await self.run_production()
 
     async def run_production(self):
-        ...
+        polling = PollingManager(database=self.database, config=self.configManager)
+        await asyncio.to_thread(polling.start_polling)
 
-    # TODO - Implement production code
+        await asyncio.sleep(60 * 60 * 24)
+        # TODO: forever sleep
 
-    ## TODO - Process
-    #   - 1. Get all ips from database
-    #   - 2. Scan all ips
-    #   - 3. Get all services from ips
-    #   - 4. Get all products from services
-    #   - 5. Save all products to database
-    #   - 6. Compare?
-    #   - 7. Repeat every 24 hours
+
 
     async def run_development(self, test_ip: str = "127.0.0.1"):
+        polling = PollingManager(database=self.database, config=self.configManager)
+        await asyncio.to_thread(polling.start_polling)
         data = NmapScanner.scan(target=test_ip)
         print("\n".join(data.all_service_products()))
 
@@ -51,6 +52,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if args.scan:
-        asyncio.run(main.start(args.debug))
+        asyncio.run(main.start())
     else:
         run_server(args.args)

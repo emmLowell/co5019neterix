@@ -1,12 +1,20 @@
 from os import getenv
-from typing import AsyncGenerator
+from typing import Any, AsyncGenerator, List
 
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import (AsyncEngine, AsyncSession,
-                                    async_sessionmaker, create_async_engine)
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
-from .SQLQueries import (CREATE_TABLES, SQL_TABLE_EXISTS, SQLITE_TABLE_EXISTS,
-                         Tables)
+from config import ConfigManager, GeneralConfig
+
+from .SQLQueries import CREATE_TABLES, SQL_TABLE_EXISTS, SQLITE_TABLE_EXISTS, Tables
+from django.conf import settings
+import django
+import asyncio
 
 
 class Dialect:
@@ -15,12 +23,32 @@ class Dialect:
 
 
 class DatabaseManager:
+    config: ConfigManager
     DB_URL: str = getenv("DB_URL", "sqlite+aiosqlite:///./database.db")
     DEBUG: bool = bool(getenv("DEBUG", "false").lower() == "true")
-    PRODUCTION: bool = bool(getenv("PRODUCTION", "false").lower() == "true")
     session_maker: async_sessionmaker[AsyncSession] = None
     async_engine: AsyncEngine
     dialect: Dialect = Dialect.SQLITE
+
+    def __init__(self, config: ConfigManager):
+        self.config = config
+        general_config = self.config.read_config(GeneralConfig)
+        if general_config.production:
+            from website.Neterix import settings as websettings
+        else:
+            from website.Neterix import settings_dev as websettings
+        settings.configure(
+            DATABASES=websettings.DATABASES,
+            INSTALLED_APPS=["website.Scanner.apps.ScannerConfig"],
+        )
+        django.setup()
+
+    def get_schedules(self) -> List[Any]:
+        from website.Scanner.models import Schedule
+
+        all = Schedule.objects.all()
+        print(all)
+        return all
 
     def create_engine(self) -> AsyncEngine:
         if "aiomysql" in DatabaseManager.DB_URL:

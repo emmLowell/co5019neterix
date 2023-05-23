@@ -7,3 +7,4 @@ sendgrid
 vulners
 django
 numpy
+django_bootstrap5

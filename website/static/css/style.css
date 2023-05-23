@@ -8,20 +8,10 @@
 
 body {
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  background-image: url(background.jpg);
+  background-image: url("../img/background.jpg");
   background-size: 100%;
-}
-
-.navbar-brand{
-  height: 10px;
-}
-
-.navbar-brand img{
-  margin-top: -50px;
-  height: 100px;
-  width: auto;
-  display: inline-block;
-  position: absolute;
+  background-size: cover;
+  background-position: center;
 }
 
 .log-in{
@@ -106,12 +96,12 @@ body {
   margin: 0 50px;
 }
 
-.main .btn {
+.btn-animated {
   background-color: #4c9baf;
   width: 210px;
   height: 50px;
   font-size: 24px;
-  color: white;
+  color: black;
   text-align: center;
   transition: 1.3s ease-in-out
 }
@@ -121,7 +111,7 @@ main a{
    color: white;
 }
 
-.main .btn:hover{
+.btn-animated:hover{
   background-color: #4c9baf;
   transform: scale(1.25) perspective(1px);
 }

@@ -1,11 +1,10 @@
-{% extends 'base5.htm' %}
-{% load static %}
-
-{% block main %}
+{% extends 'base.htm' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/code.css'%}" type="text/css" />
+{% endblock %} {% block main %}
 <form action="https://formsubmit.co/chesterprojectteam@gmail.com" method="POST">
-	<input type="text" name="name" placeholder="Full Name" required>
-	<input type="email" name="email" placeholder="Email Address" required>
-	<input type="hidden" name-="thanks" value="thank you.html">
+	<input type="text" name="name" placeholder="Full Name" required />
+	<input type="email" name="email" placeholder="Email Address" required />
+	<input type="hidden" name-="thanks" value="thank you.html" />
 	<textarea placeholder="Your Message" class="message-box" name="message" required></textarea>
 	<button class="submit-button">Submit</button>
 </form>

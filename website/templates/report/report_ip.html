@@ -1,0 +1,40 @@
+{% extends 'base.htm' %}
+
+{% load bootstrap5 %}
+{% load static %}
+
+{% block main %}
+<div class="container text-white mt-5">
+    <h1 class="display-1">Report for {{ip.ip_address}} - {{ip.alias}}</h1>
+    <p>All scanns performed on the ip</p>
+
+    <div class="container">
+        <div class="row">
+            {% if scans %}
+            {% for item in scans %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card bg-dark text-light mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.start_time }}</h5>
+                        <p class="card-description">
+                            {% if item.end_time %}
+                            Complete
+                            {% else %}
+                            Scanning
+                            {% endif %}
+                        </p>
+                        <!-- Check if complete show view if complete only -->
+                        <a href="{{ item.link }}" class="btn btn-primary">View Scan</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No Scans for this ip</p>
+            <a class="btn btn-success" href="{% url 'scan' %}">Start scan now</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

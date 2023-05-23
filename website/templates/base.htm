@@ -1,52 +1,72 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/real.css'%}" type="text/css">
-    <script src="https://kit.fontawesome.com/12c843ceec.js" crossorigin="anonymous"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    {% block css %}
-    
-    {% endblock %}
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css" />
+  <script src="https://kit.fontawesome.com/12c843ceec.js" crossorigin="anonymous"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  {% block css %} {% endblock %}
+  <title>Neterix | {{title}}</title>
 </head>
+
 <body>
-    <header>
-        {% block header %}
-        <nav class="navbar navbar-dark navbar-expand-lg fixed-top navbar-custom" style="background-color: white;">
-          <div class="container"><a class="navbar-brand" href="#">
-            <img src="{% static 'css/logo.png' %}" class="img-fluid">></a><button data-bs-toggle="collapse"
-              class="navbar-toggler" data-bs-target="#navbarResponsive"><span class="visually-hidden">Toggle
-                navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" style="color: blue;">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'scan' %}" style="color: blue;">IP Scan</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'reports' %}" style="color: blue;">Reports</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}" style="color: blue;">Contact</a></li>
-                <button class="log-in"><a href="{% url 'login' %}">Log In</a></button>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        {% endblock %}
-    </header>
-    <main>
-        {% block main %}
-        {% endblock %}
-    </main>
-    <footer>
-        {% block footer %}
-        {% endblock %}
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    {% block javascript %}
+  <header>
+    {% block header %}
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top" style="background-color: white">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img src="{% static 'img/logo.png' %}" alt="" width="128" height="32" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-info" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-info" href="{% url 'scan' %}">IP Scan</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-info" href="{% url 'reports' %}">Reports</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-info" href="{% url 'contact' %}">Contact</a>
+            </li>
+            <li class="nav-item">
+              {% if user.is_authenticated %}
+              <a class="nav-link text-info" href="{% url 'logout' %}">Logout</a>
+              {% else %}
+              <a class="nav-link text-info" href="{% url 'login' %}">Login</a>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     {% endblock %}
+  </header>
+  <main>
+    {% block main %} {% endblock %} {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  </main>
+  <footer>{% block footer %} {% endblock %}</footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  {% block javascript %} {% endblock %}
 </body>
+
 </html>

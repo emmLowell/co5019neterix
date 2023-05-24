@@ -22,6 +22,9 @@ class Vulnerability:
     cvss: Dict[str, float]
     sourceHref: Optional[str]
     vhref: str
+    
+    def __str__(self):
+        return f"{self.title} ({self.id}) {self.cvelist}"
 
     @staticmethod
     def from_dict(data: Dict) -> "Vulnerability":

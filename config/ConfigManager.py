@@ -6,7 +6,7 @@ from .JSONSerializer import JSONSerializer
 
 @dataclass
 class RedisConfig:
-    url: str = "localhost:6379"
+    url: str = "redis://localhost:6379"
 
 
 @dataclass

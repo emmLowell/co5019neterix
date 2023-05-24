@@ -10,3 +10,4 @@ django
 numpy
 django_bootstrap5
 APScheduler
+mysqlclient

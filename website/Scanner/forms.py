@@ -1,6 +1,6 @@
 from apscheduler.triggers.cron import CronTrigger
 
-from .models import Schedule, Ip
+from .models import Ip
 from django import forms
 
 class IpForm(forms.ModelForm):
@@ -11,12 +11,18 @@ class IpForm(forms.ModelForm):
 
 class ScanForm(forms.Form):
     SCAN_CHOICES = [
-        ('stealth', 'Stealth'),
-        ('normal', 'Normal'),
+        ('S', 'TCP SYN (S) - Default'),
+        ('T', 'TCP Connect (T)'),
+        ('U', 'UDP Probe (U)'),
+        ('N', 'TCP Null (N)'),
+        ('A', 'TCP ACK (A)'),
+        ('F', 'TCP FIN (F)'),
+        ('X', 'TCP XMAS (X)'),
     ]
 
     PORT_CHOICES = [
-        ('common', 'Common'),
+        ('100', 'Common (100)'),
+        ('1000', 'Less Common (1000)'),
         ('all', 'All'),
     ]
 
@@ -48,7 +54,7 @@ class ScheduleForm(forms.Form):
     day_of_week = forms.CharField(label='Day of Week', max_length=5, initial='*')
 
     scan_type = forms.ChoiceField(label='Scan Type', choices=ScanForm.SCAN_CHOICES)
-    ports = forms.ChoiceField(label='Ports', choices=ScanForm.PORT_CHOICES)
+    port_type = forms.ChoiceField(label='Ports', choices=ScanForm.PORT_CHOICES)
     ips = forms.ChoiceField(label='IPs')
     
     __cron_time = None
@@ -85,6 +91,9 @@ class ScheduleForm(forms.Form):
             raise forms.ValidationError("Invalid cron format")
 
         return cleaned_data
+    
+    def get_cron_time(self):
+        return self.__cron_time
     
     def cron(self):
         return CronTrigger.from_crontab(self.__cron_time)

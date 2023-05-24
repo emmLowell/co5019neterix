@@ -49,6 +49,7 @@ class Main:
 
 
 if __name__ == "__main__":
+    print("Starting Neterix")
     load_dotenv()
 
     main = Main()

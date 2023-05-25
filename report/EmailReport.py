@@ -14,15 +14,18 @@ class EmailReport:
     @staticmethod
     def send_raw(to_email, from_email, subject, content) -> bool:
         message = Mail(
-            from_email=from_email,
+            from_email=EmailReport.from_email,
             to_emails=to_email,
             subject=subject,
-            html_content=content
+            html_content=f"Email From: {from_email}<br>"+content
         )
-        sg = SendGridAPIClient(api_key=getenv("SENDGRID_API_KEY"))
-        response = sg.send(message)
+        try:
+            sg = SendGridAPIClient(api_key=getenv("SENDGRID_API_KEY"))
+            response = sg.send(message)
         ## status_code is success
-        return response.status_code in range(200, 300)
+            return response.status_code in range(200, 300)
+        except Exception as e:
+            return False
     
     @staticmethod
     def send_report(report: str, user) -> bool:
@@ -33,8 +36,12 @@ class EmailReport:
             html_content=EmailReport.email_content+report
         )
         
-        sg = SendGridAPIClient(api_key=getenv("SENDGRID_API_KEY"))
-        response = sg.send(message)
+        
+        try:
+            sg = SendGridAPIClient(api_key=getenv("SENDGRID_API_KEY"))
+            response = sg.send(message)
         ## status_code is success
-        return response.status_code in range(200, 300)
+            return response.status_code in range(200, 300)
+        except Exception as e:
+            return False
         

@@ -156,10 +156,13 @@ def report_scan(request, ip_id, scan_id):
 @ratelimit(key="user_or_ip", rate="3/m", method="POST")
 def contact(request):
     form = ContactForm()
-    if request.method == "post":
+    if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            EmailReport.send_raw(subject=f"Contact Us - {form.email}", to_email=EmailReport.from_email, from_email=form.cleaned_data['email'], body=form.cleaned_data['message'])
-            messages.success(request, "Message sent successfully")
+            result = EmailReport.send_raw(subject=f"Contact Us - {form.cleaned_data['email']}", to_email=EmailReport.from_email, from_email=form.cleaned_data['email'], content=form.cleaned_data['message'])
+            if(result):
+                messages.success(request, "Message sent successfully")
+            else:
+                messages.error(request, "Message failed to send")
             return redirect('home')
     return render(request, 'main/contact.html', {'title': 'Contact', "form": form})

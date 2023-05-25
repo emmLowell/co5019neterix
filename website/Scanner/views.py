@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from .forms import IpForm, ScheduleForm
-from .forms import ScanForm
+
+from report.EmailReport import EmailReport
+from .forms import IpForm, ScheduleForm, ScanForm, ContactForm
 from .models import Ip, Scan, Schedule
 from website.RedisManager import RedisManager
+from django_ratelimit.decorators import ratelimit
 
 
 def home(request):
@@ -150,5 +152,17 @@ def report_scan(request, ip_id, scan_id):
     
     return render(request, 'report/report_scan.html', {"breadcrumbs": breadcrumbs,'title': 'Report', "ip": ip, "scan": scan})
 
+
+@ratelimit(key="user_or_ip", rate="3/m", method="POST")
 def contact(request):
-    return render(request, 'main/contact.html', {'title': 'Contact'})
+    form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            result = EmailReport.send_raw(subject=f"Contact Us - {form.cleaned_data['email']}", to_email=EmailReport.from_email, from_email=form.cleaned_data['email'], content=form.cleaned_data['message'])
+            if(result):
+                messages.success(request, "Message sent successfully")
+            else:
+                messages.error(request, "Message failed to send")
+            return redirect('home')
+    return render(request, 'main/contact.html', {'title': 'Contact', "form": form})

@@ -1,11 +1,12 @@
 from typing import List, TYPE_CHECKING
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
-from config import ConfigManager
+from config import ConfigManager, GeneralConfig
 from database import DatabaseManager
 from scan import NmapScanner, VulnersScanner
 from django.utils import timezone
 from threading import Thread
+from report import EmailReport
 
 import traceback
 
@@ -98,11 +99,25 @@ class PollingManager:
         if(len(new_closed_ports) > 0):
             print(f"New closed ports: {new_closed_ports}")
             
-        print("Vulnerabilities",vulnerabilties)
-        #TODO - report data
+        if(len(new_open_ports) <= 0 and len(new_closed_ports) <= 0):return
+        
+        url = self.config_manager.read_config(GeneralConfig).website_link
+        reportLink = f"{url}/report/{ip.ip_id}/{scan.scan_id}"
+        
+        email_content = f"""
+        <h1>Open Ports</h1>
+        <ul>
+            {"".join([f"<li>{port}</li>" for port in new_open_ports])}
+        </ul>
+        <h1>Closed Ports</h1>
+        <ul>
+            {"".join([f"<li>{port}</li>" for port in new_closed_ports])}
+        </ul>
+        <link href="{reportLink}">Full Report</link>
+        """
+        EmailReport.send_report(email_content, ip.user)
 
     def start_polling_id_once(self, ip: str, scan_type: str, port_type: str):
-        print(f"Polling once. {ip}, {scan_type}, {port_type}")
         self.poll_once(ip, scan_type, port_type)
 
     def schedule_callback(self, schedule: 'Schedule'):

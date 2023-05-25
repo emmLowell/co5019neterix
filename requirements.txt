@@ -11,3 +11,4 @@ numpy
 django_bootstrap5
 APScheduler
 mysqlclient
+django-ratelimit

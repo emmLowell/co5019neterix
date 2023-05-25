@@ -4,12 +4,6 @@ This is a Python script that utilizes Nmap and Vulcan to ping one or multiple se
 
 ---
 
-## TODO List
-
-- [ ] add result page
-- [ ] generate report to file
-- [ ] Create a install.md file to expalin how to install the program and configure it
-
 ## Installation
 To use this script, you must first install the required libraries. You can do this using pip:
 
@@ -23,9 +17,16 @@ pip install -r requirements.txt
 ## Usage
 To use the web script, run the following command in your terminal:
 
+Development use only (not recommended for production):
+
 ```bash
 python main.py
 ```
+
+for production checkout https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
+
+<project_name> is wsgi.py is found in website/Neterix/wsgi.py
+
 
 to run the background script run the following command in your terminal:
 

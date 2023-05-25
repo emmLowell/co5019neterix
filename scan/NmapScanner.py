@@ -69,6 +69,11 @@ class Service:
     method: Optional[str]
     conf: str
 
+
+    def name_version(self):
+        return f"{self.product} {self.version if self.version is not None else ''}"
+        
+
     @staticmethod
     def from_dict(data: dict):
         return Service(
@@ -147,6 +152,9 @@ class NmapScanResult:
     stats: StatResult
     task_results: List[TaskResult]
     runtime: RuntimeResult
+    
+    def raw_command(self) -> str:
+        return self.stats.args
 
     def all_services(self) -> List[Service]:
         print(self.ports.ports)
@@ -181,7 +189,7 @@ class NmapScanResult:
 
 class NmapScanner:
     @staticmethod
-    def scan(target, options="-sS") -> NmapScanResult:
+    def scan(target, options="-sS", top_ports: int = None) -> NmapScanResult:
         """
         Scan a target with Nmap.
 
@@ -190,5 +198,19 @@ class NmapScanner:
         :return: The scan result.
         """
         nmap = nmap3.Nmap()
-        result = nmap.nmap_version_detection(target=target, args=options)
-        return NmapScanResult.from_dict(target, result)
+        if(top_ports is not None):
+            result = nmap.nmap_version_detection(target=target, args=options + f" --top-ports {top_ports}")
+        else:
+            result = nmap.nmap_version_detection(target=target, args=options)
+
+        try:
+            return NmapScanResult.from_dict(target, result)
+        except KeyError:
+            raise RuntimeError(f"Nmap scan failed, {target} -> {result}")
+    
+    @staticmethod
+    def detect_os(target: str) -> str:
+        # NOTE: Requires root - consider
+        nmap = nmap3.Nmap()
+        result = nmap.nmap_os_detection(target=target) 
+        return result

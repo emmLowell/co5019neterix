@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 from os import getenv
 
@@ -13,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = getenv("DJANGO_SECRET_KEY", 'django-insecure-v*x&byg98wf$1&09lyp%o&v$pj0i%a)j-3)nr5j+b9ib(%g&)b')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = getenv("ALLOWED_HOSTS", "").split(",")
 
@@ -68,11 +66,11 @@ WSGI_APPLICATION = 'website.Neterix.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "mydatabase",
-        "USER": "mydatabaseuser",
-        "PASSWORD": "mypassword",
+        "NAME": "testdatabase",
+        "USER": "root",
+        "PASSWORD": "a3b6c9",
         "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "PORT": "3306",
     }
 }
 
@@ -112,6 +110,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "static_root"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -1,0 +1,16 @@
+<hr class="bg-muted border-2 border-top border-muted">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"></li>
+        {% for breadcrumb, url in breadcrumbs.items %}
+        <li class="breadcrumb-item{% if forloop.last %} active{% endif %}">
+            {% if not forloop.last %}
+            <a href="{{ url }}">{{ breadcrumb }}</a>
+            {% else %}
+            {{ breadcrumb }}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+</nav>
+<hr class="bg-muted border-2 border-top border-muted">

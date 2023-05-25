@@ -3,7 +3,8 @@
 {% block main %}
 
 <div class="container text-white mt-5">
-    <h1 class="display-1">Schedules for {{schedule.ip.ip_address}}</h1>
+    <h1 class="display-1">Schedules for {{ip.alias}}</h1>
+    {% include 'breadcrumbs.htm' %}
     <div class="container">
         <div class="row">
             {% if schedules %}
@@ -11,11 +12,11 @@
             <div class="col-md-4 col-lg-3">
                 <div class="card bg-dark text-light mb-4">
                     <div class="card-body">
-                        <h5 class="card-title">{{ schedule.ip }}</h5>
+                        <h5 class="card-title">{{ schedule.ip.alias }}</h5>
                         <p class="card-description">
-                        <ul>
-                            <li>{{ schedule.cron_time }}</li>
-                            <li>{{ schedule.scan_type }}</li>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-dark">Cron: {{ schedule.cron_time }}</li>
+                            <li class="list-group-item list-group-item-dark">Nmap Type: -s{{ schedule.scan_type }}</li>
                         </ul>
                         </p>
                         <!-- Check if complete show view if complete only -->

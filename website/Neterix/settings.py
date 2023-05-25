@@ -11,9 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = getenv("DJANGO_SECRET_KEY", 'django-insecure-v*x&byg98wf$1&09lyp%o&v$pj0i%a)j-3)nr5j+b9ib(%g&)b')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = getenv("ALLOWED_HOSTS", "").split(",")
+CSRF_TRUSTED_ORIGINS = [f"https://{ip}" for ip in getenv("ALLOWED_HOSTS", "").split(",")]
 
 
 # Application definition

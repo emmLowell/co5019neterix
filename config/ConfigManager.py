@@ -12,6 +12,7 @@ class RedisConfig:
 @dataclass
 class GeneralConfig:
     production: bool = False
+    website_link: str = "http://localhost:8080"
 
 
 T = TypeVar("T", RedisConfig, GeneralConfig)

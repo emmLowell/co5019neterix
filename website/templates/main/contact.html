@@ -6,22 +6,10 @@
         <h1 class="display-1">Contact Us</h1>
     </div>
     <div class="container">
-        <form action="https://formsubmit.co/chesterprojectteam@gmail.com" method="POST">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required />
-            </div>
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required />
-            </div>
-            <input type="hidden" name="thanks" value="thank you.html" />
-            <div class="form-group">
-                <label for="message">Your Message</label>
-                <textarea class="form-control" id="message" placeholder="Your Message" name="message"
-                    required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+        <form method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% bootstrap_button button_type="submit" content="Send" %}
         </form>
     </div>
 </div>

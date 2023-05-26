@@ -72,9 +72,14 @@ def schedules(request, schedule_id):
     
 @login_required
 def delete_schedule(request, schedule_id):
-    schedule = Schedule.objects.get(id=schedule_id, ip__user=request.user)
+    try:
+        schedule = Schedule.objects.get(id=schedule_id)
+    except:
+        messages.warning(request, f'Failed to find Schedule')
+        return redirect("home")
+    if(schedule.ip.user != request.user): return redirect("home")
     schedule.delete()
-    RedisManager.delete_schedule(schedule_id)
+    RedisManager.stop_scheduler(schedule.id)
     messages.add_message(request, messages.SUCCESS, "Schedule deleted successfully")
     return redirect("home")
     
@@ -159,10 +164,7 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            result = EmailReport.send_raw(subject=f"Contact Us - {form.cleaned_data['email']}", to_email=EmailReport.from_email, from_email=form.cleaned_data['email'], content=form.cleaned_data['message'])
-            if(result):
-                messages.success(request, "Message sent successfully")
-            else:
-                messages.error(request, "Message failed to send")
+            EmailReport.send_raw(subject=f"Contact Us - {form.cleaned_data['email']}", to_email=EmailReport.from_email, from_email=form.cleaned_data['email'], content=form.cleaned_data['message'])
+            messages.success(request, "Message sent successfully")
             return redirect('home')
     return render(request, 'main/contact.html', {'title': 'Contact', "form": form})
